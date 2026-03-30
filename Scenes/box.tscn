@@ -1,15 +1,38 @@
 [gd_scene format=3 uid="uid://cdhiskw5cu7bn"]
 
+[ext_resource type="Script" uid="uid://tnh6m52j3j0x" path="res://Scripts/Box.cs" id="1_xkb4e"]
+[ext_resource type="Texture2D" uid="uid://bcyfwl6bf5o2t" path="res://icon.svg" id="2_ego7h"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_7yn8b"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2jyye"]
+albedo_texture = ExtResource("2_ego7h")
+
 [sub_resource type="BoxMesh" id="BoxMesh_etk83"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xkb4e"]
+size = Vector3(1.0727539, 1.1229858, 1.1207275)
 
 [node name="Box" type="RigidBody3D" unique_id=1071369273]
 collision_layer = 3
 collision_mask = 3
+mass = 0.003
+script = ExtResource("1_xkb4e")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=740173801]
 shape = SubResource("BoxShape3D_7yn8b")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1919492963]
+layers = 3
+material_override = SubResource("StandardMaterial3D_2jyye")
 mesh = SubResource("BoxMesh_etk83")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1462769282]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1548766154]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011962891, 0.0047912598, 0.022277832)
+shape = SubResource("BoxShape3D_xkb4e")
+
+[connection signal="body_entered" from="Area3D" to="." method="OnBodyEntered"]

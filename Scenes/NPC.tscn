@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bjinuxb3ta853"]
+
+[ext_resource type="Script" uid="uid://cak7cmsphiyhc" path="res://Scripts/Npc.cs" id="1_fo5tq"]
+[ext_resource type="Texture2D" uid="uid://ck051ftqor4bx" path="res://Models/Screenshot_20260330_133507.png" id="1_tdvfm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fo5tq"]
+albedo_color = Color(1, 0.40784314, 0.27450982, 1)
+albedo_texture = ExtResource("1_tdvfm")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xs5w8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7fgga"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fo5tq"]
+radius = 0.5605469
+
+[sub_resource type="BoxMesh" id="BoxMesh_fo5tq"]
+
+[node name="Agent" type="RigidBody3D" unique_id=775201258]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_fo5tq")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=965670478]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=703606431]
+material_override = SubResource("StandardMaterial3D_fo5tq")
+mesh = SubResource("CapsuleMesh_xs5w8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=415060241]
+shape = SubResource("CapsuleShape3D_7fgga")
+
+[node name="DamageArea" type="Area3D" parent="." unique_id=727601422]
+transform = Transform3D(-0.98, 0, 0, 0, -0.98, 0, 0, 0, -0.98, 0, 0, 0)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea" unique_id=19655481]
+shape = SubResource("CapsuleShape3D_fo5tq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=597527941]
+transform = Transform3D(-1.3637953e-08, 0, 0.66550046, 0, 0.288, 0, -0.312, 0, -2.9089948e-08, 0.0005626605, 0.5510601, -0.3604241)
+mesh = SubResource("BoxMesh_fo5tq")
+
+[connection signal="body_entered" from="DamageArea" to="." method="OnBodyEntered"]

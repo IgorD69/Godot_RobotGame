@@ -23,6 +23,11 @@ project/assembly_name="RollingRobots"
 
 enabled=PackedStringArray("res://addons/gd-blender-3d-shortcuts/plugin.cfg")
 
+[global_group]
+
+Player=""
+Hands=""
+
 [input]
 
 up={
