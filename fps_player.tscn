@@ -416,28 +416,30 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[node name="FPSPlayer" type="CharacterBody3D" unique_id=1794781628 node_paths=PackedStringArray("camera", "LHandStaticBodyCol", "RHandStaticBodyCol", "PlayerAnim") groups=["Player"]]
+[node name="FPSPlayer" type="CharacterBody3D" unique_id=1794781628 node_paths=PackedStringArray("camera", "PlayerAnim", "LHandStaticBodyCol", "RHandStaticBodyCol") groups=["Player"]]
 script = ExtResource("1_0yo81")
 camera = NodePath("Camera")
+PlayerAnim = NodePath("AnimationPlayer")
 LHandStaticBodyCol = NodePath("Camera/HandsMarkers/Target/LHandStaticBody/LHandStaticBodyCol")
 RHandStaticBodyCol = NodePath("Camera/HandsMarkers/TargetR/RHandStaticBody/RHandStaticBodyCol")
-PlayerAnim = NodePath("AnimationPlayer")
+StepHeight = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1410257055]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33862305, 0)
+visible = false
 shape = SubResource("CapsuleShape3D_abyao")
 
 [node name="LegMarkers" type="Node3D" parent="." unique_id=752741007]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7866787, -0.0909937)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7866787, 0.16744989)
 
 [node name="RFoot" type="Marker3D" parent="LegMarkers" unique_id=1625579268]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -2.4767237, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -2.4767237, 0.59937274)
 
 [node name="RKnee" type="Marker3D" parent="LegMarkers" unique_id=1597819615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -2.370758, 0)
 
 [node name="LFoot" type="Marker3D" parent="LegMarkers" unique_id=615069567]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -2.4767237, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -2.4767237, 0.22602975)
 
 [node name="LKnee" type="Marker3D" parent="LegMarkers" unique_id=89952238]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -2.370758, 0)
@@ -757,7 +759,7 @@ target_node = NodePath("../../../../LookAt")
 bone_name = "spine.002"
 bone = 2
 
-[node name="LegIK" type="TwoBoneIK3D" parent="Boxer/metarig/Skeleton3D" unique_id=264732519]
+[node name="RLegIK" type="TwoBoneIK3D" parent="Boxer/metarig/Skeleton3D" unique_id=264732519]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, -7.1054274e-15, 0, 1, -0.22479972, 0, -9.778887e-09)
 setting_count = 1
 settings/0/target_node = NodePath("../../../../LegMarkers/RFoot")
@@ -771,3 +773,20 @@ settings/0/end_bone_name = "foot.R"
 settings/0/end_bone = 17
 settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
+
+[node name="LLegIK" type="TwoBoneIK3D" parent="Boxer/metarig/Skeleton3D" unique_id=1108821542]
+transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, -7.1054274e-15, 0, 1, 0.21058589, 0, -0.303716)
+setting_count = 1
+settings/0/target_node = NodePath("../../../../LegMarkers/LFoot")
+settings/0/pole_node = NodePath("../../../../LegMarkers/LKnee")
+settings/0/root_bone_name = "thigh.L"
+settings/0/root_bone = 11
+settings/0/middle_bone_name = "shin.L"
+settings/0/middle_bone = 12
+settings/0/pole_direction = 0
+settings/0/end_bone_name = "foot.L"
+settings/0/end_bone = 13
+settings/0/use_virtual_end = false
+settings/0/extend_end_bone = true
+settings/0/end_bone/direction = 6
+settings/0/end_bone/length = 0.0
