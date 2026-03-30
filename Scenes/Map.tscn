@@ -23,11 +23,9 @@ glow_enabled = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7yn8b"]
 albedo_texture = ExtResource("1_s486e")
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_00287"]
-vertices = PackedVector3Array(-31.362549, 0.52, 30.380493, 93.38745, 0.52, 30.380493, 93.38745, 0.52, -57.119507, -31.362549, 0.52, -57.119507)
+[sub_resource type="NavigationMesh" id="NavigationMesh_r08cw"]
+vertices = PackedVector3Array(-34.61255, 1, -60.369507, -34.61255, 1, 33.630493, 96.63745, 1, 33.630493, 96.63745, 1, -60.369507)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
-cell_height = 0.01
-border_size = 3.65
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5t7yc"]
 albedo_texture = ExtResource("4_qumfl")
@@ -72,7 +70,8 @@ size = Vector3(29.10408, 15.140625, 7.4381256)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4328854, 2.2695313, 0.105455875)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=2105046827]
-navigation_mesh = SubResource("NavigationMesh_00287")
+navigation_mesh = SubResource("NavigationMesh_r08cw")
+navigation_layers = 3
 
 [node name="Floor" type="MeshInstance3D" parent="NavigationRegion3D" unique_id=717844566]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.028198, 0, -13.345032)
@@ -80,10 +79,10 @@ material_override = SubResource("StandardMaterial3D_5t7yc")
 mesh = SubResource("ArrayMesh_ngcqm")
 
 [node name="Agent" parent="." unique_id=775201258 instance=ExtResource("5_r08cw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.641548, 1.5000002, -7.0368714)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.641548, 0.64445317, -7.0368714)
 
 [node name="Agent2" parent="." unique_id=1941461998 instance=ExtResource("5_r08cw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.641548, 1.5000002, -2.4165516)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.641548, 0.64445317, -2.4165516)
 
 [node name="Boxes" type="Node3D" parent="." unique_id=634523434]
 

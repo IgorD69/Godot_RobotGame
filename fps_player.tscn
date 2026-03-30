@@ -422,7 +422,6 @@ camera = NodePath("Camera")
 PlayerAnim = NodePath("AnimationPlayer")
 LHandStaticBodyCol = NodePath("Camera/HandsMarkers/Target/LHandStaticBody/LHandStaticBodyCol")
 RHandStaticBodyCol = NodePath("Camera/HandsMarkers/TargetR/RHandStaticBody/RHandStaticBodyCol")
-StepHeight = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1410257055]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33862305, 0)

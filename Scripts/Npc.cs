@@ -3,15 +3,12 @@ using System;
 
 public partial class Npc : RigidBody3D
 {
-
     [Export] public float Speed = 3.0f;
     [Export] public float KnockbackForce = 15.0f;
     public CharacterBody3D _player;
     private bool _isStunned = false;
 
     public int HP = 10;
-
-
 
     public override void _Ready()
     {
@@ -28,9 +25,7 @@ public partial class Npc : RigidBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (_player == null) return;
-
-        if (_isStunned) return;
+        if (_player == null || _isStunned) return;
 
         Vector3 playerPos = _player.GlobalPosition;
         Vector3 currentPos = GlobalPosition;
@@ -38,10 +33,13 @@ public partial class Npc : RigidBody3D
         Vector3 direction = (playerPos - currentPos).Normalized();
         direction.Y = 0;
 
-        Vector3 targetVelocity = direction * Speed;
-        targetVelocity.Y = LinearVelocity.Y;
+        LinearVelocity = new Vector3(
+            direction.X * Speed,
+            LinearVelocity.Y,
+            direction.Z * Speed
+        );
 
-        LinearVelocity = targetVelocity;
+        AngularVelocity = Vector3.Zero;
 
         if (direction.Length() > 0.1f)
         {
@@ -64,39 +62,25 @@ public partial class Npc : RigidBody3D
 
         tween.Finished += () => QueueFree();
     }
+
     public void ApplyKnockback(Vector3 sourcePosition)
     {
-        Die();
-
         _isStunned = true;
 
-        GetTree().CreateTimer(1.3f).Timeout += () =>
-        {
-            HP--;
-        };
-
         Vector3 pushDirection = (GlobalPosition - sourcePosition).Normalized();
-
-
         LinearVelocity = Vector3.Zero;
 
-        if (!_player.IsOnFloor())
-        {
-            pushDirection.Y = 0.4f;
-        }
-        else
-        {
-            pushDirection.Y = 0.1f;
-        }
+        pushDirection.Y = !_player.IsOnFloor() ? 0.4f : 0.1f;
 
         ApplyCentralImpulse(pushDirection * KnockbackForce);
 
         GetTree().CreateTimer(1.3f).Timeout += () =>
         {
+            HP--;
             _isStunned = false;
+            Die();
         };
     }
-
 
     private void Die()
     {
