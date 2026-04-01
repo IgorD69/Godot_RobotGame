@@ -3,7 +3,7 @@ using System;
 
 public partial class EarthComponent : Node
 {
-    [Export] private PackedScene RockScene;
+    [Export] public Godot.Collections.Array<PackedScene> Rocks { get; set; } = new();
     [Export] public Marker3D SpawnPlace;
 
     private Node3D _currentRock;
@@ -14,7 +14,7 @@ public partial class EarthComponent : Node
     [Export] public float MaxZ = -1.5f;
     [Export] public float ScrollSpeed = 0.5f;
 
-    [Export] public float ThrowForce = 20.0f;
+    [Export] public float ThrowForce = 1000.0f;
 
     public Area3D IntersectionArea;
 
@@ -31,21 +31,32 @@ public partial class EarthComponent : Node
             Vector3 targetPos = SpawnPlace.GlobalPosition;
             targetPos.Y += _yOffset;
             _currentRock.GlobalPosition = targetPos;
+
+
         }
     }
 
     public override void _Input(InputEvent @event)
     {
-        if (_isFollowing && @event is InputEventMouseButton btn && btn.Pressed)
+        if (!_isFollowing || _currentRock == null) return;
+
+        if (@event is InputEventMouseButton btn && btn.Pressed)
         {
-
-
             Vector3 p = SpawnPlace.Position;
             if (btn.ButtonIndex == MouseButton.WheelUp) p.Z -= ScrollSpeed;
             if (btn.ButtonIndex == MouseButton.WheelDown) p.Z += ScrollSpeed;
-
             p.Z = Mathf.Clamp(p.Z, MinZ, MaxZ);
             SpawnPlace.Position = p;
+
+            if (btn.ButtonIndex == MouseButton.Left || btn.ButtonIndex == MouseButton.Right)
+            {
+                Vector3 lookDirection = -SpawnPlace.GlobalTransform.Basis.Z;
+
+                float punchForce = ThrowForce * 1.5f;
+
+                ReleaseWithCustomForce(lookDirection, punchForce);
+
+            }
         }
     }
 
@@ -53,17 +64,11 @@ public partial class EarthComponent : Node
     {
         _currentRock = null;
 
-        var spaceState = GetViewport().World3D.DirectSpaceState;
-
         Node3D overlappingRock = null;
         var bodies = IntersectionArea.GetOverlappingBodies();
 
-        GD.Print($"Obiecte detectate în zonă: {bodies.Count}");
-
         foreach (var body in bodies)
         {
-            GD.Print($"Am atins: {body.Name}");
-
             if (body.IsInGroup("Rocks") && body is Node3D rockNode)
             {
                 overlappingRock = rockNode;
@@ -71,18 +76,26 @@ public partial class EarthComponent : Node
             }
         }
 
+
         if (overlappingRock != null)
         {
             _currentRock = overlappingRock;
+
             _yOffset = _currentRock.GlobalPosition.Y - SpawnPlace.GlobalPosition.Y;
-            GD.Print("--- RECUPERARE PIATRĂ EXISTENTĂ ---");
         }
         else
         {
-            _currentRock = (Node3D)RockScene.Instantiate();
+            if (Rocks == null || Rocks.Count == 0)
+            {
+                return;
+            }
+
+            int randomIndex = (int)(GD.Randi() % (uint)Rocks.Count);
+            _currentRock = (Node3D)Rocks[randomIndex].Instantiate();
+
             GetTree().Root.AddChild(_currentRock);
+
             _yOffset = -2.0f;
-            GD.Print("--- INSTANȚIERE PIATRĂ NOUĂ ---");
         }
 
         _isFollowing = true;
@@ -101,6 +114,23 @@ public partial class EarthComponent : Node
     }
 
 
+
+
+    private void ReleaseWithCustomForce(Vector3 direction, float force)
+    {
+        _isFollowing = false;
+
+        if (_currentRock is RigidBody3D rb)
+        {
+            rb.Freeze = false;
+            rb.LinearVelocity = Vector3.Zero;
+            rb.AngularVelocity = Vector3.Zero;
+            rb.ApplyCentralImpulse(direction.Normalized() * force);
+            rb.Sleeping = false;
+        }
+
+        _currentRock = null;
+    }
     public void ReleaseRock()
     {
         if (!_isFollowing || _currentRock == null || !IsInstanceValid(_currentRock)) return;
@@ -121,6 +151,22 @@ public partial class EarthComponent : Node
         _currentRock = null;
     }
 
+
+    public void DropRock()
+    {
+        if (!_isFollowing || _currentRock == null || !IsInstanceValid(_currentRock)) return;
+
+        _isFollowing = false;
+
+        if (_currentRock is RigidBody3D rb)
+        {
+            rb.Freeze = false;
+            rb.Sleeping = false;
+        }
+
+        _currentRock = null;
+    }
+
     public void ReleaseRockWithDirection(Vector3 direction)
     {
         if (!_isFollowing || _currentRock == null || !IsInstanceValid(_currentRock)) return;
@@ -131,10 +177,19 @@ public partial class EarthComponent : Node
         {
             rb.Freeze = false;
             rb.LinearVelocity = Vector3.Zero;
+            rb.AngularVelocity = Vector3.Zero;
+
             rb.ApplyCentralImpulse(direction.Normalized() * ThrowForce);
+
             rb.Sleeping = false;
         }
 
         _currentRock = null;
+    }
+
+
+    public bool IsHoldingRock()
+    {
+        return _isFollowing && IsInstanceValid(_currentRock);
     }
 }

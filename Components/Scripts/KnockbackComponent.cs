@@ -38,7 +38,6 @@ public partial class KnockbackComponent : Node
             if (body is Node3D body3D)
             {
                 ApplyKnockback(body3D.GlobalPosition);
-                GD.Print("ROCK KNOCKBECK");
             }
         }
     }

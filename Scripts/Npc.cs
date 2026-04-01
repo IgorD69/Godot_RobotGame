@@ -47,7 +47,7 @@ public partial class Npc : RigidBody3D
             _timePassed = 0.0f;
             BoxAnimation();
 
-            GD.Print("Interval reached!");
+            // GD.Print("Interval reached!");
         }
         Vector3 playerPos = _player.GlobalPosition;
         Vector3 currentPos = GlobalPosition;

@@ -1,12 +1,12 @@
 [gd_scene format=4 uid="uid://bk6ekiw8fwd4f"]
 
-[ext_resource type="Texture2D" uid="uid://ck051ftqor4bx" path="res://Models/Screenshot_20260330_133507.png" id="1_4dqbg"]
-[ext_resource type="PackedScene" uid="uid://cf2vu50bgrxns" path="res://Components/Scenes/knockback_component.tscn" id="2_umxe1"]
+[ext_resource type="Texture2D" uid="uid://ck051ftqor4bx" path="res://Models/Screenshot_20260330_133507.png" id="1_mc132"]
+[ext_resource type="PackedScene" uid="uid://cf2vu50bgrxns" path="res://Components/Scenes/knockback_component.tscn" id="2_1jwlx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vxn5h"]
 cull_mode = 1
 albedo_color = Color(0.8436603, 0.5564027, 0.40862715, 1)
-albedo_texture = ExtResource("1_4dqbg")
+albedo_texture = ExtResource("1_mc132")
 uv1_scale = Vector3(0.245, 0.245, 0.245)
 uv1_offset = Vector3(0, 0.325, 0.37)
 uv1_triplanar = true
@@ -64,7 +64,7 @@ mesh = SubResource("ArrayMesh_ij3c1")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1843950732]
 shape = SubResource("ConvexPolygonShape3D_4dqbg")
 
-[node name="KnockbackComponent" parent="." unique_id=1018744725 node_paths=PackedStringArray("Rock") instance=ExtResource("2_umxe1")]
+[node name="KnockbackComponent" parent="." unique_id=1018744725 node_paths=PackedStringArray("Rock") instance=ExtResource("2_1jwlx")]
 Rock = NodePath("..")
 KnockbackForce = 2000.0
 

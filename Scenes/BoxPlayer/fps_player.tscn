@@ -3,7 +3,11 @@
 [ext_resource type="Script" uid="uid://b2tdbwcur3igj" path="res://Scripts/FPSPlayer.cs" id="1_vtecb"]
 [ext_resource type="Texture2D" uid="uid://ck051ftqor4bx" path="res://Models/Screenshot_20260330_133507.png" id="2_myqv8"]
 [ext_resource type="Script" uid="uid://bs65f6meo8ckc" path="res://Components/Scripts/EarthComponent.cs" id="3_1qly3"]
-[ext_resource type="PackedScene" uid="uid://bk6ekiw8fwd4f" path="res://Scenes/boulder.tscn" id="4_vtecb"]
+[ext_resource type="PackedScene" uid="uid://bk6ekiw8fwd4f" path="res://Scenes/RoksScenes/boulder.tscn" id="4_myqv8"]
+[ext_resource type="PackedScene" uid="uid://do23soa6ym6s1" path="res://Scenes/RoksScenes/Rock.tscn" id="5_1qly3"]
+[ext_resource type="PackedScene" uid="uid://qdxhn264ro1u" path="res://Scenes/RoksScenes/Rock4.tscn" id="5_q3j3f"]
+[ext_resource type="PackedScene" uid="uid://crdpl2tctb2l2" path="res://Scenes/RoksScenes/Rock3.tscn" id="6_xtpqk"]
+[ext_resource type="PackedScene" uid="uid://ipj5iei8qglb" path="res://Scenes/RoksScenes/Rock1.tscn" id="7_vud2x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abyao"]
 radius = 0.30566406
@@ -756,7 +760,7 @@ skin = SubResource("Skin_1hvxf")
 skeleton = NodePath("..")
 
 [node name="Legs" type="MeshInstance3D" parent="Boxer/metarig/Skeleton3D" unique_id=1135757441]
-transform = Transform3D(1, 0, 3.5527137e-15, 0, 1, 0, -3.5527137e-15, 0, 1, 0, 0, 4.656613e-10)
+transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, -7.1054274e-15, 0, 1, 0.008709616, 2.3841858e-07, 0.0046795793)
 mesh = SubResource("ArrayMesh_yii0j")
 skin = SubResource("Skin_1hvxf")
 skeleton = NodePath("..")
@@ -806,6 +810,7 @@ settings/0/end_bone/length = 0.0
 
 [node name="EarthComponent" type="Node" parent="." unique_id=1741433 node_paths=PackedStringArray("SpawnPlace")]
 script = ExtResource("3_1qly3")
-RockScene = ExtResource("4_vtecb")
+Rocks = Array[PackedScene]([ExtResource("5_1qly3"), ExtResource("5_q3j3f"), ExtResource("6_xtpqk"), ExtResource("7_vud2x"), ExtResource("4_myqv8")])
 SpawnPlace = NodePath("../Camera/SpawnPlace")
 MaxZ = -2.0
+ThrowForce = 3000.0

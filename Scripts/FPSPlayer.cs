@@ -23,7 +23,6 @@ public partial class FPSPlayer : CharacterBody3D
     [ExportGroup("Earth Manager")]
     [Export] public EarthComponent EarthManager;
 
-
     private float _rotationX;
     private float _distanceTraveled = 0f;
     private bool _isRightFootNext = true;
@@ -47,8 +46,8 @@ public partial class FPSPlayer : CharacterBody3D
         if (_rFoot != null) _footBaselineY = _rFoot.Position.Y;
         if (_lFoot != null) _footBaselineY = _lFoot.Position.Y;
 
-        LHandStaticBodyCol?.SetDeferred(CollisionShape3D.PropertyName.Disabled, true);
-        RHandStaticBodyCol?.SetDeferred(CollisionShape3D.PropertyName.Disabled, true);
+        LHandStaticBodyCol.Disabled = true;
+        RHandStaticBodyCol.Disabled = true;
 
         if (_head != null) _head.CastShadow = GeometryInstance3D.ShadowCastingSetting.ShadowsOnly;
         if (_torso != null) _torso.CastShadow = GeometryInstance3D.ShadowCastingSetting.ShadowsOnly;
@@ -119,14 +118,19 @@ public partial class FPSPlayer : CharacterBody3D
                  .SetTrans(Tween.TransitionType.Cubic);
     }
 
-
-    public void SpawnRock()
-    {
-        EarthManager.InstantiateRock();
-    }
-
     private void HandleAnimations()
     {
+        if (!PlayerAnim.IsPlaying() || (PlayerAnim.CurrentAnimation != "LPunch" && PlayerAnim.CurrentAnimation != "RPunch"))
+        {
+            LHandStaticBodyCol.Disabled = true;
+            RHandStaticBodyCol.Disabled = true;
+        }
+
+        if (PlayerAnim.IsPlaying() && (PlayerAnim.CurrentAnimation == "LPunch" || PlayerAnim.CurrentAnimation == "RPunch"))
+        {
+            return;
+        }
+
         if (Input.IsActionPressed("Block"))
         {
             if (Input.IsActionJustPressed("Block"))
@@ -134,41 +138,51 @@ public partial class FPSPlayer : CharacterBody3D
                 EarthManager?.InstantiateRock();
             }
 
-            if (PlayerAnim.CurrentAnimation != "Block")
-                PlayerAnim.Play("Block");
+            if (Input.IsActionJustPressed("LClick") || Input.IsActionJustPressed("RClick"))
+            {
+                if (EarthManager != null && EarthManager.IsHoldingRock())
+                {
+                    if (Input.IsActionJustPressed("LClick")) LHandStaticBodyCol.Disabled = false;
+                    else RHandStaticBodyCol.Disabled = false;
 
+                    Vector3 lookDir = -camera.GlobalTransform.Basis.Z;
+                    EarthManager.ReleaseRockWithDirection(lookDir);
+
+                    string punchAnim = Input.IsActionJustPressed("LClick") ? "LPunch" : "RPunch";
+                    PlayerAnim.Play(punchAnim);
+                    return;
+                }
+            }
+
+            if (PlayerAnim.CurrentAnimation != "Block")
+            {
+                PlayerAnim.Play("Block");
+            }
             return;
         }
 
         if (Input.IsActionJustReleased("Block"))
         {
-            Vector3 lookDirection = -GetViewport().GetCamera3D().GlobalTransform.Basis.Z;
-            EarthManager?.ReleaseRockWithDirection(lookDirection);
-        }
-
-        if (PlayerAnim.IsPlaying() && (PlayerAnim.CurrentAnimation == "RPunch" || PlayerAnim.CurrentAnimation == "LPunch"))
-            return;
-
-        if (LHandStaticBodyCol.Disabled == false || RHandStaticBodyCol.Disabled == false)
-        {
-            LHandStaticBodyCol.SetDeferred(CollisionShape3D.PropertyName.Disabled, true);
-            RHandStaticBodyCol.SetDeferred(CollisionShape3D.PropertyName.Disabled, true);
+            EarthManager?.DropRock();
+            if (PlayerAnim.CurrentAnimation == "Block") PlayerAnim.Stop();
         }
 
         if (Input.IsActionJustPressed("RClick"))
         {
-            RHandStaticBodyCol.SetDeferred(CollisionShape3D.PropertyName.Disabled, false);
+            RHandStaticBodyCol.Disabled = false;
             PlayerAnim.Play("RPunch");
         }
         else if (Input.IsActionJustPressed("LClick"))
         {
-            LHandStaticBodyCol.SetDeferred(CollisionShape3D.PropertyName.Disabled, false);
+            LHandStaticBodyCol.Disabled = false;
             PlayerAnim.Play("LPunch");
         }
         else
         {
             if (PlayerAnim.CurrentAnimation != "Deff")
+            {
                 PlayerAnim.Play("Deff");
+            }
         }
     }
 
