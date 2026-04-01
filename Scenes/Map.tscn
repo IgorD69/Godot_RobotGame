@@ -6,6 +6,20 @@
 [ext_resource type="Texture2D" uid="uid://ck051ftqor4bx" path="res://Models/Screenshot_20260330_133507.png" id="4_qumfl"]
 [ext_resource type="PackedScene" uid="uid://bjinuxb3ta853" path="res://Scenes/NPC.tscn" id="5_r08cw"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r08cw"]
+sky_horizon_color = Color(1.2188252, 1.1637998, 1.1233754, 1)
+ground_bottom_color = Color(0.8824472, 0.5933452, 0.335648, 1)
+ground_horizon_color = Color(1.2188252, 1.1637998, 1.1233754, 1)
+
+[sub_resource type="Sky" id="Sky_00287"]
+sky_material = SubResource("ProceduralSkyMaterial_r08cw")
+
+[sub_resource type="Environment" id="Environment_5t7yc"]
+background_mode = 2
+sky = SubResource("Sky_00287")
+tonemap_mode = 2
+glow_enabled = true
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7yn8b"]
 albedo_texture = ExtResource("1_s486e")
 
@@ -32,6 +46,9 @@ data = PackedVector3Array(-66.14075, -0.5, 47.524475, -66.14075, -0.5, -47.52447
 
 [node name="Map" type="Node3D" unique_id=886635755]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5354881, -1.2480698, 7.5637274)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1896705471]
+environment = SubResource("Environment_5t7yc")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1734565373]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
@@ -149,9 +166,3 @@ size = Vector3(11.168945, 2.1376953, 0.51904297)
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 31.028198, 0, -13.345032)
 shape = SubResource("ConcavePolygonShape3D_r08cw")
 debug_color = Color(1, 1, 1, 0.41960785)
-
-[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1397061392]
-transform = Transform3D(-0.044734575, 0.11319436, 0.9925653, -0.9300076, -0.36754033, 0, 0.36480775, -0.9230932, 0.12171338, -0.55201435, 4.5351505, 0)
-light_energy = 16.0
-shadow_enabled = true
-spot_range = 9.20976

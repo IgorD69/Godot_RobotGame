@@ -22,7 +22,7 @@ public partial class KnockbackComponent : Node
         Rock.LinearVelocity = Vector3.Zero;
         Rock.AngularVelocity = Vector3.Zero;
 
-        pushDirection.Y = 0.5f;
+        pushDirection.Y = 0.1f;
 
         Rock.ApplyCentralImpulse(pushDirection.Normalized() * KnockbackForce);
 

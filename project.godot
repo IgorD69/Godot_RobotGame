@@ -27,6 +27,7 @@ enabled=PackedStringArray("res://addons/gd-blender-3d-shortcuts/plugin.cfg")
 
 Player=""
 Hands=""
+Rocks=""
 
 [input]
 

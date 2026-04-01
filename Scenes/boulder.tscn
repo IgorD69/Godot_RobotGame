@@ -7,6 +7,9 @@
 cull_mode = 1
 albedo_color = Color(0.8436603, 0.5564027, 0.40862715, 1)
 albedo_texture = ExtResource("1_4dqbg")
+uv1_scale = Vector3(0.245, 0.245, 0.245)
+uv1_offset = Vector3(0, 0.325, 0.37)
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ojq2b"]
 
@@ -42,11 +45,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_v0w6q")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_44ojt"]
-radius = 2.6471558
-height = 5.2943115
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4dqbg"]
+points = PackedVector3Array(1.4407032, 1.6048828, -0.30175576, -0.9744873, 0.13890345, -0.5188191, -0.91360193, 0.1566026, -0.5939975, -0.32703432, 2.3839507, -0.38314202, 0.37100166, 0.15004854, 1.3186237, 1.3594983, 0.16323182, -0.8792189, -0.24697447, 1.8933252, 0.8509059, 0.37080166, 1.1518902, -1.2103921, 1.2323407, 1.5632995, 0.7242552, 1.5392388, 0.023194237, 0.4028553, -0.9661111, 0.1466138, 0.52868116, 0.45264533, 2.6708434, -0.42396447, 0.37097162, 0.027220368, -1.220428, 0.4520734, 2.6635163, 0.4347453, -0.57077956, 2.0947292, 0.35422868, -0.41786894, 0.029462202, 1.023844, -0.36469454, 1.1950935, -1.0351214, 0.45209876, 1.31777, 1.169335, -0.81879175, 1.3987606, -0.46469477, 1.1860801, 1.5620161, -0.7475679, 1.4035175, 0.15998483, 0.853533, 1.6564108, 0.36320052, 0.35871887, -0.45085454, 1.070598, 1.0131588, 0.32993743, 1.9738984, -0.9580363, -0.41875923, 0.15268825, -1.1364504, 1.3564061, 1.8098019, 0.3146375, 1.6627487, 0.15006256, -0.38912776, -0.8326835, 1.3992416, 0.44226715, -0.8825415, 0.021022553, -0.4735631, 0.3705927, 2.052043, 0.92537653, -0.32048196, 2.374027, 0.39255556, -0.20217292, 1.8898103, -0.8728011)
 
-[node name="RigidBody3D" type="RigidBody3D" unique_id=144749412]
+[node name="RigidBody3D" type="RigidBody3D" unique_id=144749412 groups=["Rocks"]]
 collision_layer = 3
 collision_mask = 3
 mass = 100.0
@@ -59,9 +61,8 @@ max_contacts_reported = 4
 material_override = SubResource("StandardMaterial3D_vxn5h")
 mesh = SubResource("ArrayMesh_ij3c1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2126535342]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.289567, 1.2398739, 0)
-shape = SubResource("CapsuleShape3D_44ojt")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1843950732]
+shape = SubResource("ConvexPolygonShape3D_4dqbg")
 
 [node name="KnockbackComponent" parent="." unique_id=1018744725 node_paths=PackedStringArray("Rock") instance=ExtResource("2_umxe1")]
 Rock = NodePath("..")

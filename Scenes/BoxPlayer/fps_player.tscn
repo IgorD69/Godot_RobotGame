@@ -95,6 +95,8 @@ bind/3/name = &"Bone.003"
 bind/3/bone = -1
 bind/3/pose = Transform3D(-0.098619334, 0, 0, 0, 0.098619334, 4.310788e-09, 0, -4.310788e-09, 0.098619334, -0.28757957, 0.010534656, -0.02473459)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_vtecb"]
+
 [sub_resource type="Animation" id="Animation_m2gsw"]
 resource_name = "Block"
 loop_mode = 1
@@ -592,6 +594,13 @@ settings/0/extend_end_bone = false
 
 [node name="SpawnPlace" type="Marker3D" parent="Camera" unique_id=1678916299]
 transform = Transform3D(0.333, 0, 0, 0, 0.333, 0, 0, 0, 0.333, 0, -0.7752187, -2.9604125)
+
+[node name="Area3D" type="Area3D" parent="Camera/SpawnPlace" unique_id=746521029]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera/SpawnPlace/Area3D" unique_id=1094801611]
+shape = SubResource("SphereShape3D_vtecb")
 
 [node name="LookAt" type="Marker3D" parent="." unique_id=1980797807]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03700006, -0.771)
