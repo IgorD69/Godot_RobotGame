@@ -1,7 +1,9 @@
 [gd_scene format=4 uid="uid://dni7f7spj2ilm"]
 
-[ext_resource type="Script" uid="uid://b2tdbwcur3igj" path="res://Scripts/FPSPlayer.cs" id="1_0yo81"]
-[ext_resource type="Texture2D" uid="uid://ck051ftqor4bx" path="res://Models/Screenshot_20260330_133507.png" id="2_abyao"]
+[ext_resource type="Script" uid="uid://b2tdbwcur3igj" path="res://Scripts/FPSPlayer.cs" id="1_vtecb"]
+[ext_resource type="Texture2D" uid="uid://ck051ftqor4bx" path="res://Models/Screenshot_20260330_133507.png" id="2_myqv8"]
+[ext_resource type="Script" uid="uid://bs65f6meo8ckc" path="res://Components/Scripts/EarthComponent.cs" id="3_1qly3"]
+[ext_resource type="PackedScene" uid="uid://bk6ekiw8fwd4f" path="res://Scenes/boulder.tscn" id="4_vtecb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_abyao"]
 radius = 0.30566406
@@ -12,7 +14,7 @@ radius = 0.38784853
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2gsw"]
 cull_mode = 2
-albedo_texture = ExtResource("2_abyao")
+albedo_texture = ExtResource("2_myqv8")
 metallic_specular = 0.0
 stencil_flags = 2
 
@@ -416,12 +418,13 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[node name="FPSPlayer" type="CharacterBody3D" unique_id=1794781628 node_paths=PackedStringArray("camera", "PlayerAnim", "LHandStaticBodyCol", "RHandStaticBodyCol") groups=["Player"]]
-script = ExtResource("1_0yo81")
+[node name="FPSPlayer" type="CharacterBody3D" unique_id=1794781628 node_paths=PackedStringArray("camera", "PlayerAnim", "LHandStaticBodyCol", "RHandStaticBodyCol", "EarthManager") groups=["Player"]]
+script = ExtResource("1_vtecb")
 camera = NodePath("Camera")
 PlayerAnim = NodePath("AnimationPlayer")
 LHandStaticBodyCol = NodePath("Camera/HandsMarkers/Target/LHandStaticBody/LHandStaticBodyCol")
 RHandStaticBodyCol = NodePath("Camera/HandsMarkers/TargetR/RHandStaticBody/RHandStaticBodyCol")
+EarthManager = NodePath("EarthComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1410257055]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33862305, 0)
@@ -429,13 +432,12 @@ visible = false
 shape = SubResource("CapsuleShape3D_abyao")
 
 [node name="LegMarkers" type="Node3D" parent="." unique_id=752741007]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7866787, 0.16744989)
 
 [node name="RFoot" type="Marker3D" parent="LegMarkers" unique_id=1625579268]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -2.4767237, 0.59937274)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017191648, -1.2051444, 0.59937274)
 
 [node name="RKnee" type="Marker3D" parent="LegMarkers" unique_id=1597819615]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -2.370758, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39326334, -1.2219152, 0)
 
 [node name="LFoot" type="Marker3D" parent="LegMarkers" unique_id=615069567]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -2.4767237, 0.22602975)
@@ -444,7 +446,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -2.4767237, 0.22602975
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -2.370758, 0)
 
 [node name="Camera" type="Camera3D" parent="." unique_id=1266789452]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7866787, -0.0909937)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7866787, 0.055987775)
 
 [node name="HandsMarkers" type="Node3D" parent="Camera" unique_id=999592849]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6502944, 0)
@@ -483,7 +485,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5571095, 0.15164965, -0.284
 transform = Transform3D(-0.063, 0, -5.507635e-09, 0, 0.063, 0, 5.507635e-09, 0, -0.063, 0.30649608, -0.4851219, -0.995501)
 
 [node name="LHand" type="Node3D" parent="Camera/Hands" unique_id=1422974575]
-transform = Transform3D(10.139999, 0, 0, 0, 0, -10.139999, 0, 10.139999, 0, 13.11747, 2.2347867, -15.428955)
+transform = Transform3D(10.139999, -5.684342e-14, 0, 0, 0, -10.139999, 5.684342e-14, 10.139999, 0, 9.552035, 2.2347865, -15.428956)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="Camera/Hands/LHand" unique_id=1214694110]
 bones/0/name = "Bone"
@@ -536,7 +538,7 @@ settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
 
 [node name="Rhand" type="Node3D" parent="Camera/Hands" unique_id=1099886862]
-transform = Transform3D(-10.139999, -5.684342e-14, 0, 0, 0, -10.139999, -5.684342e-14, 10.139999, 0, -3.6939993, 2.582926, -15.563669)
+transform = Transform3D(-10.139999, -1.1368684e-13, 0, 0, 0, -10.139999, -1.1368684e-13, 10.139999, 0, -1.0776372, 2.5829258, -15.56367)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="Camera/Hands/Rhand" unique_id=1142342385]
 bones/0/name = "Bone"
@@ -588,8 +590,11 @@ settings/0/end_bone = 2
 settings/0/use_virtual_end = false
 settings/0/extend_end_bone = false
 
+[node name="SpawnPlace" type="Marker3D" parent="Camera" unique_id=1678916299]
+transform = Transform3D(0.333, 0, 0, 0, 0.333, 0, 0, 0, 0.333, 0, -0.7752187, -2.9604125)
+
 [node name="LookAt" type="Marker3D" parent="." unique_id=1980797807]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.037, -0.771)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03700006, -0.771)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1449909993]
 libraries/ = SubResource("AnimationLibrary_3fiw5")
@@ -742,12 +747,12 @@ skin = SubResource("Skin_1hvxf")
 skeleton = NodePath("..")
 
 [node name="Legs" type="MeshInstance3D" parent="Boxer/metarig/Skeleton3D" unique_id=1135757441]
+transform = Transform3D(1, 0, 3.5527137e-15, 0, 1, 0, -3.5527137e-15, 0, 1, 0, 0, 4.656613e-10)
 mesh = SubResource("ArrayMesh_yii0j")
 skin = SubResource("Skin_1hvxf")
 skeleton = NodePath("..")
 
 [node name="Torso" type="MeshInstance3D" parent="Boxer/metarig/Skeleton3D" unique_id=1939379752]
-visible = false
 mesh = SubResource("ArrayMesh_728qp")
 skin = SubResource("Skin_1hvxf")
 skeleton = NodePath("..")
@@ -789,3 +794,9 @@ settings/0/use_virtual_end = false
 settings/0/extend_end_bone = true
 settings/0/end_bone/direction = 6
 settings/0/end_bone/length = 0.0
+
+[node name="EarthComponent" type="Node" parent="." unique_id=1741433 node_paths=PackedStringArray("SpawnPlace")]
+script = ExtResource("3_1qly3")
+RockScene = ExtResource("4_vtecb")
+SpawnPlace = NodePath("../Camera/SpawnPlace")
+MaxZ = -2.0

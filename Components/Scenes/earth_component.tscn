@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c883c3hleyu11"]
+
+[ext_resource type="Script" uid="uid://bs65f6meo8ckc" path="res://Components/Scripts/EarthComponent.cs" id="1_mv374"]
+
+[node name="EarthComponent" type="Node" unique_id=787669522]
+script = ExtResource("1_mv374")

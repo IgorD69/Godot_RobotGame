@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://bjinuxb3ta853"]
 
 [ext_resource type="Script" uid="uid://cak7cmsphiyhc" path="res://Scripts/Npc.cs" id="1_fo5tq"]
+[ext_resource type="PackedScene" uid="uid://cf2vu50bgrxns" path="res://Components/Scenes/knockback_component.tscn" id="3_7fgga"]
 [ext_resource type="Material" uid="uid://djqhcpdg47w0c" path="res://Materials/PlayerTestMaterial.tres" id="3_xs5w8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7fgga"]
@@ -510,7 +511,7 @@ settings/0/extend_end_bone = false
 transform = Transform3D(1.66, 0, 0, 0, 1.66, 0, 0, 0, 1.66, 0, 0, 0)
 
 [node name="LTarget" type="Marker3D" parent="Boxer/HandsMarkers" unique_id=1427973714]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5607817, 1.6929655, -0.16147974)
+transform = Transform3D(1, 0, 0, 0, 0.9999902, 0.0044156685, 0, -0.0044156685, 0.9999902, -0.5607817, 1.4661287, 0.03666471)
 
 [node name="LPole" type="Marker3D" parent="Boxer/HandsMarkers" unique_id=1728842346]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8276478, 0.15164965, 0.36485875)
@@ -523,5 +524,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.044020228, 1.0772773, 0.07
 
 [node name="Lookat" type="Marker3D" parent="." unique_id=1460907939]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9959939, -2.2871275)
+
+[node name="KnockbackComponent" parent="." unique_id=1018744725 instance=ExtResource("3_7fgga")]
 
 [connection signal="body_entered" from="DamageArea" to="." method="OnBodyEntered"]

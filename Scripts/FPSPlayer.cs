@@ -20,6 +20,10 @@ public partial class FPSPlayer : CharacterBody3D
     [Export] public float StepLength = 1.0f;
     [Export] public float StepHeight = 0.2f;
 
+    [ExportGroup("Earth Manager")]
+    [Export] public EarthComponent EarthManager;
+
+
     private float _rotationX;
     private float _distanceTraveled = 0f;
     private bool _isRightFootNext = true;
@@ -37,8 +41,8 @@ public partial class FPSPlayer : CharacterBody3D
         _lookAtNode = GetNode<Marker3D>("LookAt");
         _rFoot = GetNode<Marker3D>("LegMarkers/RFoot");
         _lFoot = GetNode<Marker3D>("LegMarkers/LFoot");
-        _head = GetNodeOrNull<MeshInstance3D>("Head");
-        _torso = GetNodeOrNull<MeshInstance3D>("Torso");
+        _head = GetNodeOrNull<MeshInstance3D>("Boxer/metarig/Skeleton3D/Head");
+        _torso = GetNodeOrNull<MeshInstance3D>("Boxer/metarig/Skeleton3D/Torso");
 
         if (_rFoot != null) _footBaselineY = _rFoot.Position.Y;
         if (_lFoot != null) _footBaselineY = _lFoot.Position.Y;
@@ -115,12 +119,31 @@ public partial class FPSPlayer : CharacterBody3D
                  .SetTrans(Tween.TransitionType.Cubic);
     }
 
+
+    public void SpawnRock()
+    {
+        EarthManager.InstantiateRock();
+    }
+
     private void HandleAnimations()
     {
         if (Input.IsActionPressed("Block"))
         {
-            if (PlayerAnim.CurrentAnimation != "Block") PlayerAnim.Play("Block");
+            if (Input.IsActionJustPressed("Block"))
+            {
+                EarthManager?.InstantiateRock();
+            }
+
+            if (PlayerAnim.CurrentAnimation != "Block")
+                PlayerAnim.Play("Block");
+
             return;
+        }
+
+        if (Input.IsActionJustReleased("Block"))
+        {
+            Vector3 lookDirection = -GetViewport().GetCamera3D().GlobalTransform.Basis.Z;
+            EarthManager?.ReleaseRockWithDirection(lookDirection);
         }
 
         if (PlayerAnim.IsPlaying() && (PlayerAnim.CurrentAnimation == "RPunch" || PlayerAnim.CurrentAnimation == "LPunch"))
@@ -144,7 +167,8 @@ public partial class FPSPlayer : CharacterBody3D
         }
         else
         {
-            if (PlayerAnim.CurrentAnimation != "Deff") PlayerAnim.Play("Deff");
+            if (PlayerAnim.CurrentAnimation != "Deff")
+                PlayerAnim.Play("Deff");
         }
     }
 
